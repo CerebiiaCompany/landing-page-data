@@ -7,6 +7,7 @@ import {
   Modulos,
   Cumplimiento,
   Proceso,
+  Planes,
   Familia,
   Aliados,
   CtaFinal,
@@ -50,6 +51,7 @@ function Index() {
         <Modulos />
         <Cumplimiento />
         <Proceso />
+        <Planes />
         <Familia />
         <Aliados />
         <CtaFinal />

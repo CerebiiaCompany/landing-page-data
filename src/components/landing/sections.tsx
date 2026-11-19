@@ -10,6 +10,10 @@ import {
   History,
   ArrowRight,
   Sparkles,
+  Gift,
+  Sprout,
+  BriefcaseBusiness,
+  Building2,
   CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -255,6 +259,161 @@ export function Proceso() {
     </section>
   );
 }
+
+const planes = [
+  {
+    nombre: "Gratuito",
+    icono: Gift,
+    descripcion: "Ideal para comenzar a gestionar tus datos personales.",
+    precio: "$0",
+    periodo: "Sin costo",
+    caracteristicas: [
+      "Acceso completo a las funciones de la plataforma",
+      "Hasta 10.000 registros de datos personales",
+      "1 usuario",
+      "Asesoría legal para implementar 1 plantilla personalizada",
+    ],
+  },
+  {
+    nombre: "Semilla",
+    icono: Sprout,
+    descripcion: "Para empresas que inician su gestión de datos personales.",
+    precio: "$1.000.000",
+    periodo: "COP / anual",
+    caracteristicas: [
+      "Acceso completo a las funciones de la plataforma",
+      "Hasta 10.000 registros de datos personales",
+      "1 usuario",
+      "Asesoría legal para implementar 1 plantilla personalizada",
+    ],
+  },
+  {
+    nombre: "Profesional",
+    icono: BriefcaseBusiness,
+    descripcion: "Para empresas que manejan grandes volúmenes de datos.",
+    precio: "$2.000.000",
+    periodo: "COP / anual",
+    caracteristicas: [
+      "Acceso completo a las funciones de la plataforma",
+      "Hasta 50.000 registros de datos personales",
+      "5 usuarios",
+      "Asesoría legal para implementar 1 plantilla personalizada",
+    ],
+  },
+  {
+    nombre: "Corporativo",
+    icono: Building2,
+    descripcion: "Para organizaciones que requieren monitoreo, reportes y envíos masivos.",
+    precio: "$3.000.000",
+    periodo: "COP / anual",
+    caracteristicas: [
+      "Acceso completo a las funciones de la plataforma",
+      "Hasta 100.000 registros de datos personales",
+      "Usuarios ilimitados",
+      "Asesoría legal para implementar 1 plantilla personalizada",
+      "10.000 SMS durante el primer mes",
+    ],
+  },
+];
+
+
+
+export function Planes() {
+  return (
+    <section id="planes" className="border-b border-border bg-background">
+      <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+        <Reveal>
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Planes diseñados para tu empresa
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Elige el plan que mejor se adapte a las necesidades de gestión
+              y protección de tus datos personales.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Tarjetas de planes */}
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {planes.map((plan, index) => (
+            <Reveal key={plan.nombre} delay={index * 100}>
+              <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+                {/* Icono */}
+                <div className="mb-5 flex justify-center">
+                  <span className="flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                    <plan.icono className="size-8" />
+                  </span>
+                </div>
+
+                {/* Nombre */}
+                <h3 className="text-xl font-bold text-foreground">
+                  {plan.nombre}
+                </h3>
+
+                {/* Descripción */}
+                <p className="mt-2 min-h-12 text-sm text-muted-foreground">
+                  {plan.descripcion}
+                </p>
+
+                {/* Precio */}
+                <div className="mt-6">
+                  <span className="text-3xl font-bold text-foreground">
+                    {plan.precio}
+                  </span>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {plan.periodo}
+                  </p>
+                </div>
+
+                <div className="my-6 border-t border-border" />
+
+                {/* Características */}
+                <ul className="flex-1 space-y-4">
+                  {plan.caracteristicas.map((caracteristica) => (
+                    <li
+                      key={caracteristica}
+                      className="flex items-start gap-2 text-sm text-muted-foreground"
+                    >
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <span>{caracteristica}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Botón seleccionar plan */}
+                <Button
+                  asChild
+                  className="mt-8 w-full"
+                  variant={plan.nombre === "Gratuito" ? "outline" : "default"}
+                >
+                  <Link to="/contacto">
+                    Seleccionar plan
+                  </Link>
+                </Button>
+
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Botón general de registro */}
+        <div className="mt-10 flex justify-center">
+          <Button
+            size="lg"
+            className="min-w-56"
+            onClick={() => {}}
+          >
+            Regístrate ahora
+          </Button>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
 
 export function Familia() {
   const productos = [
