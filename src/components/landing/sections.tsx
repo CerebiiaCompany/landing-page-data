@@ -338,11 +338,11 @@ export function Planes() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {planes.map((plan, index) => (
             <Reveal key={plan.nombre} delay={index * 100}>
-              <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <div className="flex h-full flex-col rounded-2xl border border-blue-200 bg-blue-50 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg dark:border-blue-900 dark:bg-blue-950/30">
 
                 {/* Icono */}
                 <div className="mb-5 flex justify-center">
-                  <span className="flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <span className="flex size-16 items-center justify-center rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
                     <plan.icono className="size-8" />
                   </span>
                 </div>
