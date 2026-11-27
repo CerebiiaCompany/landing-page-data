@@ -1,3 +1,4 @@
+import { useState, type FormEvent } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ClipboardList,
@@ -16,7 +17,12 @@ import {
   Building2,
   CheckCircle2,
 } from "lucide-react";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Reveal } from "@/components/landing/Reveal";
 import heroImg from "@/assets/hero-data.jpg";
 import iaImg from "@/assets/ia-policies.jpg";
@@ -68,20 +74,19 @@ export function Hero() {
   );
 }
 
-
 export function IaBlock() {
   return (
     <section id="solucion" className="border-b border-border bg-card">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-20">
         <Reveal>
-        <img
-          src={iaImg}
-          alt="Documentos de política de tratamiento validados automáticamente"
-          width={1024}
-          height={768}
-          loading="lazy"
-          className="w-full rounded-3xl shadow-card"
-        />
+          <img
+            src={iaImg}
+            alt="Documentos de política de tratamiento validados automáticamente"
+            width={1024}
+            height={768}
+            loading="lazy"
+            className="w-full rounded-3xl shadow-card"
+          />
         </Reveal>
         <Reveal delay={120}>
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
@@ -219,7 +224,11 @@ export function Cumplimiento() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           {kpis.map((k, i) => (
-            <Reveal key={k.label} delay={i * 80} className="rounded-2xl border border-border bg-background p-5">
+            <Reveal
+              key={k.label}
+              delay={i * 80}
+              className="rounded-2xl border border-border bg-background p-5"
+            >
               <p className={`text-3xl font-extrabold tracking-tight ${k.tone}`}>{k.value}</p>
               <p className="mt-2 text-sm text-muted-foreground">{k.label}</p>
             </Reveal>
@@ -316,8 +325,6 @@ const planes = [
   },
 ];
 
-
-
 export function Planes() {
   return (
     <section id="planes" className="border-b border-border bg-background">
@@ -339,10 +346,9 @@ export function Planes() {
           {planes.map((plan, index) => (
             <Reveal key={plan.nombre} delay={index * 100}>
               <div className="flex h-full flex-col rounded-2xl border border-blue-200 bg-blue-50 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg dark:border-blue-900 dark:bg-blue-950/30">
-
                 {/* Icono */}
                 <div className="mb-5 flex justify-center">
-                <span className="flex size-16 items-center justify-center rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
+                  <span className="flex size-16 items-center justify-center rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
                     <plan.icono className="size-8" />
                   </span>
                 </div>
@@ -392,7 +398,6 @@ export function Planes() {
                     Seleccionar plan
                   </Link>
                 </Button>
-
               </div>
             </Reveal>
           ))}
@@ -408,12 +413,10 @@ export function Planes() {
             Regístrate ahora
           </Button>
         </div>
-
       </div>
     </section>
   );
 }
-
 
 export function Familia() {
   const productos = [
@@ -449,6 +452,154 @@ export function Familia() {
               <p className="mt-2 text-sm text-navy-foreground/70">{p.d}</p>
             </Reveal>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function ContactoSection() {
+  const [enviando, setEnviando] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    setEnviando(true);
+
+    const { error } = await supabase.from("leads").insert({
+      nombre: String(form.get("nombre") ?? ""),
+      empresa: String(form.get("empresa") ?? ""),
+      email: String(form.get("email") ?? ""),
+      telefono: String(form.get("telefono") ?? ""),
+      titulares: String(form.get("titulares") ?? ""),
+      mensaje: String(form.get("mensaje") ?? ""),
+      origen: "landing",
+    });
+
+    setEnviando(false);
+
+    if (error) {
+      toast.error("No pudimos enviar tu solicitud. Intenta de nuevo.");
+      return;
+    }
+
+    setEnviado(true);
+    toast.success("Solicitud enviada. Te contactaremos pronto.");
+  }
+
+  return (
+    <section id="contacto" className="border-b border-border bg-background">
+      <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+        {/* Encabezado centrado arriba */}
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+            Hablemos de tu cumplimiento
+          </p>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            Solicita una demostración de Cerebiia Data
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground">
+            Cuéntanos cómo gestionas hoy el consentimiento y las solicitudes de tus titulares. Te
+            mostramos una implementación ajustada a tu operación.
+          </p>
+        </div>
+
+        {/* Tarjeta del formulario centrada con tono azul igual a Planes */}
+        <div className="mx-auto mt-10 max-w-2xl rounded-2xl border border-blue-200 bg-blue-50 p-6 shadow-card sm:p-8 dark:border-blue-900 dark:bg-blue-950/30">
+          {enviado ? (
+            <div className="flex flex-col items-center gap-3 py-6 text-center">
+              <CheckCircle2 className="size-10 text-success" />
+              <h3 className="text-xl font-semibold text-foreground">Solicitud recibida</h3>
+              <p className="text-base text-muted-foreground">
+                Gracias por escribirnos. Nuestro equipo te contactará en las próximas horas hábiles.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={onSubmit} className="space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="nombre" className="text-base font-semibold text-foreground">
+                    Nombre
+                  </Label>
+                  <Input
+                    id="nombre"
+                    name="nombre"
+                    required
+                    placeholder="Tu nombre"
+                    className="h-11 bg-white text-base md:text-base dark:bg-background"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="empresa" className="text-base font-semibold text-foreground">
+                    Empresa
+                  </Label>
+                  <Input
+                    id="empresa"
+                    name="empresa"
+                    placeholder="Nombre de la empresa"
+                    className="h-11 bg-white text-base md:text-base dark:bg-background"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-base font-semibold text-foreground">
+                    Correo corporativo
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="tu@empresa.com"
+                    className="h-11 bg-white text-base md:text-base dark:bg-background"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="telefono" className="text-base font-semibold text-foreground">
+                    Teléfono
+                  </Label>
+                  <Input
+                    id="telefono"
+                    name="telefono"
+                    placeholder="+57 300 000 0000"
+                    className="h-11 bg-white text-base md:text-base dark:bg-background"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="titulares" className="text-base font-semibold text-foreground">
+                  Número aproximado de titulares
+                </Label>
+                <Input
+                  id="titulares"
+                  name="titulares"
+                  placeholder="Ej. 5.000"
+                  className="h-11 bg-white text-base md:text-base dark:bg-background"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="mensaje" className="text-base font-semibold text-foreground">
+                  Mensaje
+                </Label>
+                <Textarea
+                  id="mensaje"
+                  name="mensaje"
+                  rows={4}
+                  placeholder="Cuéntanos tu necesidad de cumplimiento"
+                  className="bg-white text-base md:text-base dark:bg-background"
+                />
+              </div>
+
+              <Button type="submit" className="w-full text-base font-semibold" size="lg" disabled={enviando}>
+                {enviando ? "Enviando..." : "Enviar solicitud"}
+              </Button>
+            </form>
+          )}
         </div>
       </div>
     </section>

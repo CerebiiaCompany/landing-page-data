@@ -1,5 +1,5 @@
 export function WhatsAppButton() {
-    const phoneNumber = "573000000000"; // Conserva aquí el número colombiano real de Cerebiia
+    const phoneNumber = "573209576723"; 
     const message = encodeURIComponent(
       "Hola, me gustaría recibir asesoría sobre Cerebiia Data."
     );

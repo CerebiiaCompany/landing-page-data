@@ -28,7 +28,7 @@ export const Route = createFileRoute("/contacto")({
   component: ContactoPage,
 });
 
-function ContactoPage() {
+export function ContactoPage() {
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
 

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/landing/SiteHeader";
 import { SiteFooter } from "@/components/landing/SiteFooter";
-import { WhatsAppButton } from "@/components/landing/WhatsAppButton";
 import {
   Hero,
   IaBlock,
@@ -10,6 +9,7 @@ import {
   Proceso,
   Planes,
   Familia,
+  ContactoSection,
   Aliados,
   CtaFinal,
 } from "@/components/landing/sections";
@@ -54,11 +54,11 @@ function Index() {
         <Proceso />
         <Planes />
         <Familia />
+        <ContactoSection />
         <Aliados />
         <CtaFinal />
       </main>
       <SiteFooter />
-      <WhatsAppButton />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
   );
