@@ -34,36 +34,36 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6">
         <Logo />
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-9 md:flex">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-base font-semibold tracking-tight text-foreground/85 transition-colors hover:text-primary"
             >
               {l.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={isDark ? "Activar modo claro" : "Activar modo nocturno"}
             title={isDark ? "Modo claro" : "Modo nocturno"}
-            className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
+            className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
           >
-            {isDark ? <Sun className="size-4 text-amber-400" /> : <Moon className="size-4" />}
+            {isDark ? <Sun className="size-5 text-amber-400" /> : <Moon className="size-5" />}
           </button>
 
-          <Button asChild variant="ghost" size="sm">
+          <Button asChild variant="ghost" size="default" className="text-base font-semibold">
             <Link to="/auth">Ingresar</Link>
           </Button>
-          <Button asChild size="sm">
+          <Button asChild size="default" className="px-5 text-base font-semibold">
             <Link to="/contacto">Solicitar demo</Link>
           </Button>
         </div>
@@ -73,18 +73,18 @@ export function SiteHeader() {
             type="button"
             onClick={toggleTheme}
             aria-label={isDark ? "Activar modo claro" : "Activar modo nocturno"}
-            className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground"
+            className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-foreground"
           >
-            {isDark ? <Sun className="size-4 text-amber-400" /> : <Moon className="size-4" />}
+            {isDark ? <Sun className="size-5 text-amber-400" /> : <Moon className="size-5" />}
           </button>
 
           <button
             type="button"
-            className="inline-flex size-10 items-center justify-center rounded-md text-foreground"
+            className="inline-flex size-11 items-center justify-center rounded-md text-foreground"
             aria-label="Abrir menú"
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? <X className="size-6" /> : <Menu className="size-6" />}
           </button>
         </div>
       </div>
@@ -97,16 +97,16 @@ export function SiteHeader() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-2 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+                className="rounded-md px-3 py-2.5 text-base font-semibold text-foreground/85 hover:bg-muted hover:text-primary"
               >
                 {l.label}
               </a>
             ))}
-            <div className="mt-2 flex gap-2">
-              <Button asChild variant="outline" className="flex-1">
+            <div className="mt-3 flex gap-2">
+              <Button asChild variant="outline" className="flex-1 text-base font-semibold">
                 <Link to="/auth">Ingresar</Link>
               </Button>
-              <Button asChild className="flex-1">
+              <Button asChild className="flex-1 text-base font-semibold">
                 <Link to="/contacto">Solicitar demo</Link>
               </Button>
             </div>
