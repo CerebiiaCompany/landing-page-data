@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 export function Logo({ variant = "light" }: { variant?: "light" | "dark" }) {
-  const title = variant === "dark" ? "text-white" : "text-slate-900";
+  const title = variant === "dark" ? "text-white" : "text-slate-900 dark:text-white";
   const sub = variant === "dark" ? "text-navy-foreground/80" : "text-primary";
 
   return (

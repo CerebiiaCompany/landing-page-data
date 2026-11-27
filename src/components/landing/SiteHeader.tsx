@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./Logo";
 
@@ -13,6 +13,24 @@ const links = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("cerebiia-theme");
+    const prefersDark =
+      saved === "dark" ||
+      (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    document.documentElement.classList.toggle("dark", prefersDark);
+    setIsDark(prefersDark);
+  }, []);
+
+  function toggleTheme() {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("cerebiia-theme", next ? "dark" : "light");
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
@@ -32,6 +50,16 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={isDark ? "Activar modo claro" : "Activar modo nocturno"}
+            title={isDark ? "Modo claro" : "Modo nocturno"}
+            className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
+          >
+            {isDark ? <Sun className="size-4 text-amber-400" /> : <Moon className="size-4" />}
+          </button>
+
           <Button asChild variant="ghost" size="sm">
             <Link to="/auth">Ingresar</Link>
           </Button>
@@ -40,14 +68,25 @@ export function SiteHeader() {
           </Button>
         </div>
 
-        <button
-          type="button"
-          className="inline-flex size-10 items-center justify-center rounded-md text-foreground md:hidden"
-          aria-label="Abrir menú"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={isDark ? "Activar modo claro" : "Activar modo nocturno"}
+            className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground"
+          >
+            {isDark ? <Sun className="size-4 text-amber-400" /> : <Moon className="size-4" />}
+          </button>
+
+          <button
+            type="button"
+            className="inline-flex size-10 items-center justify-center rounded-md text-foreground"
+            aria-label="Abrir menú"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
       </div>
 
       {open && (
