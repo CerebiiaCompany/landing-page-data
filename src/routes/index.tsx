@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/landing/SiteHeader";
 import { SiteFooter } from "@/components/landing/SiteFooter";
+import { WhatsAppButton } from "@/components/landing/WhatsAppButton";
 import {
   Hero,
   IaBlock,
@@ -57,6 +58,7 @@ function Index() {
         <CtaFinal />
       </main>
       <SiteFooter />
+      <WhatsAppButton />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
   );
